@@ -44,6 +44,10 @@ public class Player : MonoBehaviour {
 		if (IsGrounded () && !isJumping) {
 			if (input.y > 0f) {
 				isJumping = true;
+
+				if (!isSinking && !isFalling && !GameManager.instance.levelComplete) {
+					SoundManager.instance.PlayOneShot (SoundManager.instance.jump);
+				}
 			}
 		}
 
@@ -84,6 +88,7 @@ public class Player : MonoBehaviour {
 
 		if (other.CompareTag ("QuickSand")) {
 			isSinking = true;
+			SoundManager.instance.PlayOneShot (SoundManager.instance.quicksand);
 			GameManager.instance.PlayerDied ();
 		}
 	}
@@ -101,6 +106,8 @@ public class Player : MonoBehaviour {
 	void Die () {
 		GameManager.instance.PlayerDied ();
 
+		SoundManager.instance.PlayOneShot (SoundManager.instance.dieBySpike);
+
 		Vector3 deathPos;
 
 		if (!isSinking) {
@@ -110,6 +117,7 @@ public class Player : MonoBehaviour {
 		}
 
 		Instantiate (deathParticles, deathPos, Quaternion.identity);
+
 
 		gameObject.SetActive (false);
 	}
