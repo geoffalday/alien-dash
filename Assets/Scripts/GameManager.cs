@@ -3,22 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
-
-	public static GameManager instance;
+public class GameManager : GenericSingleton<GameManager> {
 
 	[HideInInspector] public bool gameOver;
 	[HideInInspector] public int currentLevel;
 	[HideInInspector] public bool levelComplete;
-
-	void Awake () {
-		if (instance == null) {
-			instance = this;
-		}  else if (instance != this) {
-			Destroy (gameObject);
-		}
-		DontDestroyOnLoad(gameObject);
-	}
 
 	void Start () {
 		//gameOver = true;
@@ -28,12 +17,12 @@ public class GameManager : MonoBehaviour {
 
 	void Update () {
 		if (currentLevel == 0) {
-			GameUI.instance.DisplayMainMenu ();
+			GameUI.Instance.DisplayMainMenu ();
 		}
 	}
 
 	public void NewGame () {
-		GameUI.instance.HideAllMenus ();
+		GameUI.Instance.HideAllMenus ();
 		currentLevel = 1;
 		gameOver = false;
 		SceneManager.LoadScene (currentLevel);
@@ -41,33 +30,33 @@ public class GameManager : MonoBehaviour {
 
 	public void RestartLevel () {
 		gameOver = false;
-		GameUI.instance.HideAllMenus ();
+		GameUI.Instance.HideAllMenus ();
 		SceneManager.LoadScene (currentLevel);
 	}
 
 	public void LoadMenu () {
 		SceneManager.LoadScene ("Menu");
-		GameUI.instance.DisplayMainMenu ();
+		GameUI.Instance.DisplayMainMenu ();
 	}
 
 	public void PlayerDied () {
 		gameOver = true;
-		GameUI.instance.DisplayDeathMenu ();
+		GameUI.Instance.DisplayDeathMenu ();
 	}
 
 	public void LevelCompleted () {
 		levelComplete = true;
 
 		if (currentLevel < SceneManager.sceneCountInBuildSettings - 1) {
-			GameUI.instance.DisplayLevelCompleteMenu ();
+			GameUI.Instance.DisplayLevelCompleteMenu ();
 		} else {
-			GameUI.instance.DisplayGameCompleteMenu ();
+			GameUI.Instance.DisplayGameCompleteMenu ();
 		}
 	}
 
 	public void LoadNextLevel () {
 		levelComplete = false;
-		GameUI.instance.HideAllMenus ();
+		GameUI.Instance.HideAllMenus ();
 
 		int nextLevel = currentLevel + 1;
 		SceneManager.LoadScene (nextLevel);
@@ -79,7 +68,7 @@ public class GameManager : MonoBehaviour {
 		levelComplete = false;
 		currentLevel = 0;
 		SceneManager.LoadScene (currentLevel);
-		GameUI.instance.DisplayMainMenu ();
+		GameUI.Instance.DisplayMainMenu ();
 	}
 
 	public void QuitGame () {

@@ -14,7 +14,7 @@ public class ScrollingObject : MonoBehaviour {
 	}
 
 	void Update () {
-		if (GameManager.instance.gameOver) {
+		if (GameManager.Instance.gameOver) {
 			objectRigidBody.velocity = Vector2.zero;
 		}
 	}

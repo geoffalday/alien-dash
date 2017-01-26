@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameUI : MonoBehaviour {
-
-	public static GameUI instance;
+public class GameUI : GenericSingleton<GameUI> {
 
 	public GameObject mainMenu;
 	public GameObject deathMenu;
@@ -13,17 +11,8 @@ public class GameUI : MonoBehaviour {
 	public GameObject continueLevelButton;
 	public GameObject quitGameButton;
 
-	void Awake () {
-		if (instance == null) {
-			instance = this;
-		} else if (instance != this) {
-			Destroy (gameObject);
-		}
-		DontDestroyOnLoad(gameObject);
-	}
-
 	void OnGUI () {
-		if (GameManager.instance.currentLevel > 0) {
+		if (GameManager.Instance.currentLevel > 0) {
 			continueLevelButton.SetActive (true);
 		} else {
 			continueLevelButton.SetActive (false);
@@ -38,27 +27,27 @@ public class GameUI : MonoBehaviour {
 
 	// Things buttons can do
 	public void NewGame () {
-		GameManager.instance.NewGame ();
+		GameManager.Instance.NewGame ();
 	}
 
 	public void RetryLevel () {
-		GameManager.instance.RestartLevel ();
+		GameManager.Instance.RestartLevel ();
 	}
 
 	public void LoadNextLevel () {
-		GameManager.instance.LoadNextLevel ();
+		GameManager.Instance.LoadNextLevel ();
 	}
 
 	public void QuitLevel () {
-		GameManager.instance.LoadMenu ();
+		GameManager.Instance.LoadMenu ();
 	}
 
 	public void QuitGame () {
-		GameManager.instance.QuitGame ();
+		GameManager.Instance.QuitGame ();
 	}
 
 	public void ResetGame () {
-		GameManager.instance.ResetGame ();
+		GameManager.Instance.ResetGame ();
 	}
 
 	// Menu handlers

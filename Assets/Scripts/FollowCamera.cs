@@ -16,7 +16,7 @@ public class FollowCamera : MonoBehaviour {
 	}
 
 	void LateUpdate () {
-		if (!GameManager.instance.gameOver) {
+		if (!GameManager.Instance.gameOver) {
 			StartFollowing ();
 			cameraT.position = new Vector3 (targetT.position.x - targetOffset, cameraT.position.y, cameraT.position.z);
 		} else {

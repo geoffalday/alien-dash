@@ -45,8 +45,8 @@ public class Player : MonoBehaviour {
 			if (input.y > 0f) {
 				isJumping = true;
 
-				if (!isSinking && !isFalling && !GameManager.instance.levelComplete) {
-					SoundManager.instance.PlayOneShot (SoundManager.instance.jump);
+				if (!isSinking && !isFalling && !GameManager.Instance.levelComplete) {
+					SoundManager.Instance.PlayOneShot (SoundManager.Instance.jump);
 				}
 			}
 		}
@@ -74,7 +74,7 @@ public class Player : MonoBehaviour {
 			rb.velocity = new Vector2 (0, -1);
 		}
 
-		if (GameManager.instance.levelComplete) {
+		if (GameManager.Instance.levelComplete) {
 			speed = 0;
 			rb.isKinematic = true;
 			rb.velocity = Vector2.zero;
@@ -88,8 +88,8 @@ public class Player : MonoBehaviour {
 
 		if (other.CompareTag ("QuickSand")) {
 			isSinking = true;
-			SoundManager.instance.PlayOneShot (SoundManager.instance.quicksand);
-			GameManager.instance.PlayerDied ();
+			SoundManager.Instance.PlayOneShot (SoundManager.Instance.quicksand);
+			GameManager.Instance.PlayerDied ();
 		}
 	}
 
@@ -104,9 +104,9 @@ public class Player : MonoBehaviour {
 	}
 
 	void Die () {
-		GameManager.instance.PlayerDied ();
+		GameManager.Instance.PlayerDied ();
 
-		SoundManager.instance.PlayOneShot (SoundManager.instance.dieBySpike);
+		SoundManager.Instance.PlayOneShot (SoundManager.Instance.dieBySpike);
 
 		Vector3 deathPos;
 

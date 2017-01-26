@@ -6,8 +6,8 @@ public class Goal : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.CompareTag ("Player")) {
-			SoundManager.instance.PlayOneShot (SoundManager.instance.levelComplete);
-			GameManager.instance.LevelCompleted ();
+			SoundManager.Instance.PlayOneShot (SoundManager.Instance.levelComplete);
+			GameManager.Instance.LevelCompleted ();
 		}
 	}
 

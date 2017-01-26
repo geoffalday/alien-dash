@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour {
+public class SoundManager : GenericSingleton<SoundManager> {
 
-	public static SoundManager instance;
 	public AudioClip jump;
 	public AudioClip dieBySpike;
 	public AudioClip quicksand;
@@ -13,15 +12,6 @@ public class SoundManager : MonoBehaviour {
 
 	private AudioSource soundEffectAudio;
 
-	void Awake () {
-		if (instance == null) {
-			instance = this;
-		}  else if (instance != this) {
-			Destroy (gameObject);
-		}
-		DontDestroyOnLoad(gameObject);
-	}
-		
 	void Start () {
 		AudioSource[] sources = GetComponents<AudioSource> ();
 
