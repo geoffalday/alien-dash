@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour {
 
+	private AudioSource goalAudio;
+
+	void Awake () {
+		goalAudio = GetComponent<AudioSource> ();
+	}
+
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.CompareTag ("Player")) {
-			SoundManager.Instance.PlayOneShot (SoundManager.Instance.levelComplete);
+			goalAudio.PlayOneShot (SoundManager.Instance.levelComplete);
 			GameManager.Instance.LevelCompleted ();
 		}
 	}

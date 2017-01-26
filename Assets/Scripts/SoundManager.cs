@@ -8,7 +8,6 @@ public class SoundManager : GenericSingleton<SoundManager> {
 	public AudioClip dieBySpike;
 	public AudioClip quicksand;
 	public AudioClip levelComplete;
-	public AudioClip gameComplete;
 
 	private AudioSource soundEffectAudio;
 
