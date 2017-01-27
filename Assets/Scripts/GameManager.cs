@@ -6,30 +6,36 @@ using UnityEngine.SceneManagement;
 public class GameManager : GenericSingleton<GameManager> {
 
 	[HideInInspector] public bool gameOver;
-	[HideInInspector] public int currentLevel;
 	[HideInInspector] public bool levelComplete;
+	[HideInInspector] public int currentLevel;
 
 	void Start () {
+		gameOver = true;
 		levelComplete = false;
-		currentLevel = SceneManager.GetActiveScene ().buildIndex;
-	}
 
-	void Update () {
-		if (currentLevel == 0) {
-			GameUI.Instance.DisplayMainMenu ();
+		if (PlayerPrefs.GetInt ("currentLevel") > 0) {
+			currentLevel = PlayerPrefs.GetInt ("currentLevel");
+		} else {
+			currentLevel = 0;
+			SaveGame ();
 		}
+
+		GameUI.Instance.DisplayMainMenu ();
 	}
 
 	public void NewGame () {
 		GameUI.Instance.HideAllMenus ();
 		currentLevel = 1;
+		SaveGame ();
 		gameOver = false;
+		levelComplete = false;
 		SceneManager.LoadScene (currentLevel);
 	}
 
 	public void RestartLevel () {
-		gameOver = false;
 		GameUI.Instance.HideAllMenus ();
+		gameOver = false;
+		levelComplete = false;
 		SceneManager.LoadScene (currentLevel);
 	}
 
@@ -42,34 +48,47 @@ public class GameManager : GenericSingleton<GameManager> {
 
 	public void PlayerDied () {
 		gameOver = true;
+		levelComplete = false;
 		GameUI.Instance.DisplayDeathMenu ();
 	}
 
 	public void LevelCompleted () {
+		gameOver = false;
 		levelComplete = true;
 
 		if (currentLevel < SceneManager.sceneCountInBuildSettings - 1) {
+			currentLevel = currentLevel + 1;
+			SaveGame ();
 			GameUI.Instance.DisplayLevelCompleteMenu ();
 		} else {
+			currentLevel = 0;
+			SaveGame ();
 			GameUI.Instance.DisplayGameCompleteMenu ();
 		}
 	}
 
 	public void LoadNextLevel () {
-		levelComplete = false;
 		GameUI.Instance.HideAllMenus ();
+		gameOver = false;
+		levelComplete = false;
 
-		int nextLevel = currentLevel + 1;
-		SceneManager.LoadScene (nextLevel);
-		currentLevel = nextLevel;
+//		currentLevel = currentLevel + 1;
+//		SaveGame ();
+		SceneManager.LoadScene (currentLevel);
 	}
 
 	public void ResetGame () {
+		GameUI.Instance.HideAllMenus ();
 		gameOver = true;
 		levelComplete = false;
 		currentLevel = 0;
+		SaveGame ();
 		SceneManager.LoadScene (currentLevel);
 		GameUI.Instance.DisplayMainMenu ();
+	}
+
+	void SaveGame () {
+		PlayerPrefs.SetInt ("currentLevel", currentLevel);
 	}
 
 	public void QuitGame () {
@@ -79,4 +98,5 @@ public class GameManager : GenericSingleton<GameManager> {
 		Application.Quit ();
 		#endif
 	}
+
 }
