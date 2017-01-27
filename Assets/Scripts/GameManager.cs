@@ -56,7 +56,7 @@ public class GameManager : GenericSingleton<GameManager> {
 		gameOver = false;
 		levelComplete = true;
 
-		if (currentLevel < SceneManager.sceneCountInBuildSettings - 1) {
+		if (currentLevel < SceneManager.sceneCountInBuildSettings - 2) {
 			currentLevel = currentLevel + 1;
 			SaveGame ();
 			GameUI.Instance.DisplayLevelCompleteMenu ();
