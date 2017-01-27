@@ -10,7 +10,6 @@ public class GameManager : GenericSingleton<GameManager> {
 	[HideInInspector] public bool levelComplete;
 
 	void Start () {
-		//gameOver = true;
 		levelComplete = false;
 		currentLevel = SceneManager.GetActiveScene ().buildIndex;
 	}
@@ -35,6 +34,8 @@ public class GameManager : GenericSingleton<GameManager> {
 	}
 
 	public void LoadMenu () {
+		gameOver = true;
+		levelComplete = false;
 		SceneManager.LoadScene ("Menu");
 		GameUI.Instance.DisplayMainMenu ();
 	}
