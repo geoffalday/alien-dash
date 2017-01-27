@@ -71,9 +71,6 @@ public class GameManager : GenericSingleton<GameManager> {
 		GameUI.Instance.HideAllMenus ();
 		gameOver = false;
 		levelComplete = false;
-
-//		currentLevel = currentLevel + 1;
-//		SaveGame ();
 		SceneManager.LoadScene (currentLevel);
 	}
 
