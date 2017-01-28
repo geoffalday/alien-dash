@@ -13,6 +13,28 @@ public class GameManager : GenericSingleton<GameManager> {
 		gameOver = true;
 		levelComplete = false;
 
+		#if UNITY_EDITOR
+		// Play from level started on in editor
+		// If started from a scene other than menu...
+		if (SceneManager.GetActiveScene().buildIndex > 0) {
+			// Set currentLevel to level started from in editor
+			currentLevel = SceneManager.GetActiveScene().buildIndex;
+			// Save currentLevel in prefs
+			SaveGame();
+			// Set gameOver to false so camera will follow
+			gameOver = false;
+		} else {
+			// Otherwise, do things the normal way
+			if (PlayerPrefs.GetInt ("currentLevel") > 0) {
+				currentLevel = PlayerPrefs.GetInt ("currentLevel");
+			} else {
+				currentLevel = 0;
+				SaveGame ();
+			}
+
+			GameUI.Instance.DisplayMainMenu ();
+		}
+		#else
 		if (PlayerPrefs.GetInt ("currentLevel") > 0) {
 			currentLevel = PlayerPrefs.GetInt ("currentLevel");
 		} else {
@@ -21,6 +43,7 @@ public class GameManager : GenericSingleton<GameManager> {
 		}
 
 		GameUI.Instance.DisplayMainMenu ();
+		#endif
 	}
 
 	public void NewGame () {
