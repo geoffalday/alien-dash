@@ -63,6 +63,7 @@ public class GameManager : GenericSingleton<GameManager> {
 	}
 
 	public void LoadMenu () {
+		GameUI.Instance.HideAllMenus ();
 		gameOver = true;
 		levelComplete = false;
 		SceneManager.LoadScene ("Menu");

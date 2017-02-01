@@ -52,22 +52,18 @@ public class GameUI : GenericSingleton<GameUI> {
 
 	// Menu handlers
 	public void DisplayMainMenu () {
-		HideAllMenus ();
 		mainMenu.SetActive (true);
 	}
 
 	public void DisplayDeathMenu () {
-		HideAllMenus ();
 		deathMenu.SetActive (true);
 	}
 
 	public void DisplayLevelCompleteMenu () {
-		HideAllMenus ();
 		levelCompleteMenu.SetActive (true);
 	}
 
 	public void DisplayGameCompleteMenu () {
-		HideAllMenus ();
 		gameCompleteMenu.SetActive (true);
 	}
 
