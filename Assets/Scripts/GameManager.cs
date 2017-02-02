@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class GameManager : GenericSingleton<GameManager> {
 
@@ -80,6 +81,12 @@ public class GameManager : GenericSingleton<GameManager> {
 		gameOver = false;
 		levelComplete = true;
 
+		// log level completed in analytics
+		string level_id = "Level" + currentLevel.ToString();
+		Analytics.CustomEvent("LevelCompleted", new Dictionary<string, object> {
+			{ "level_id", level_id }
+		});
+			
 		if (currentLevel < SceneManager.sceneCountInBuildSettings - 2) {
 			currentLevel = currentLevel + 1;
 			SaveGame ();
